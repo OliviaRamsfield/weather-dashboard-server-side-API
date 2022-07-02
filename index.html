@@ -19,22 +19,26 @@
   </head>
   <body class="flex-column min-100-vh">
     <header class="hero">
-      <h1 class="app-title">Weather Dashboard</h1>
+      <h1 class="font-weight-bold text-center">Weather Dashboard</h1>
     </header>
-    <main class="flex-row justify-space-between">
+    <main class="row justify-space-between">
       <div class="col-12 col-md-4">
-        <div class="card">
-          <h2 class="card-header">Search for a City</h2>
+        <div class="border-bottom border-dark mb-4">
+          <h2 class="text-center font-weight-bold">Search for a City:</h2>
           <form id="user-form" class="card-body">
-            <label class="form-label" for="city">City</label>
             <input
               name="city"
               autofocus="true"
               type="text"
+              placeholder="Enter City"
               id="city"
-              class="form-input"
+              class="input-group-large form-control"
             />
-            <button type="submit" class="btn">Find City</button>
+            <div class="row">
+              <button type="submit" class="btn btn-primary btn-block mt-2">
+                Search
+              </button>
+            </div>
           </form>
         </div>
         <div class="card">
@@ -44,7 +48,7 @@
       </div>
       <!-- second column starts with city weather and 5 day forecast divs-->
       <div class="col-12 col-md-8">
-        <div id="city-container" class="list-group">
+        <div id="city-container" class="list-group border border-dark">
           <h2 class="focus-city"></h2>
           <ul>
             <li>Temp:</li>
@@ -54,7 +58,7 @@
           </ul>
         </div>
         <div id="future-forecast" class="list-group">
-          <h3>5-Day Forecast:</h3>
+          <h3 class="font-weight-bold">5-Day Forecast:</h3>
           <ul>
             <li>Date:</li>
             <li>ICON</li>
