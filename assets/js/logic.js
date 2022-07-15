@@ -36,7 +36,7 @@ function getLatLon () {
 
                     var lat = data[0].lat;
                     var lon = data[0].lon;
-                    //getWeather(lat, lon);
+                    getWeather(lat, lon);
             })
         }
 });
@@ -45,9 +45,12 @@ function getLatLon () {
 
 var getWeather = function (lat, lon) {
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&limit=5&appid=41a56cf98d8a606201c73d9d3aa3cd7f"
+    console.log("This is my" + apiUrl);
     fetch(apiUrl).then(function(response) {
         if (response.ok) {
-            response.json().then(function(data) {})
+            response.json().then(function(data) {
+                const temp = data.current.temp;
+                console.log(`this is my temp ${temp}`);})
         }
     })
 }
