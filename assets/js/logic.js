@@ -1,9 +1,11 @@
 var cityInputEl = document.querySelector("#city")
 var cityContainerEl = document.querySelector("#user-form")
-var city = cityInputEl.value.trim()
+// var city = cityInputEl.value.trim()
 var currentWeatherContainerEl = document.querySelector("#city-weather-container")
 var fiveDayContainerEl = document.querySelector("#future-forecast")
 var dayOneEl = document.querySelector("#dayOne")
+//getting the current day using moment.js
+var todaysDate = moment().format('(M/D/YYYY)').toString();
 
 var formSubmitHandler = function(event) {
     //prevent page from refreshing
@@ -16,7 +18,7 @@ var formSubmitHandler = function(event) {
         getLatLon(city);
         console.log(city);
         //clear old content
-        cityInputEl.value = ""
+        // cityInputEl.value = ""
     } else {
         alert("Please enter a valid city")
     }
@@ -117,6 +119,15 @@ var displayCurrentWeather = function (temp, wind, humidity, uvIndex, icon) {
     //clear old content
     currentWeatherContainerEl.textContent = ""
     //format weather information
+    var currentCity = document.createElement("h2")
+    currentCity.textContent = cityInputEl.value
+    console.log(currentCity)
+    currentCity.classList.add("font-weight-bold")
+    currentWeatherContainerEl.appendChild(currentCity)
+    var currentDay = document.createElement("h2")
+    currentDay.innerHTML = todaysDate
+    currentDay.classList.add("font-weight-bold")
+    currentWeatherContainerEl.appendChild(currentDay)
     var weatherIconEl = document.createElement("img")
     var iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png"
     weatherIconEl.classList.add("icons")
