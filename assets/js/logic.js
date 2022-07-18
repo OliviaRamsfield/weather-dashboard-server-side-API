@@ -3,6 +3,7 @@ var cityContainerEl = document.querySelector("#user-form")
 var city = cityInputEl.value.trim()
 var currentWeatherContainerEl = document.querySelector("#city-weather-container")
 var fiveDayContainerEl = document.querySelector("#future-forecast")
+var dayOneEl = document.querySelector("#dayOne")
 
 var formSubmitHandler = function(event) {
     //prevent page from refreshing
@@ -67,13 +68,41 @@ var getWeather = function (lat, lon) {
                 displayCurrentWeather(temp, wind, humidity, uvIndex, icon);
                 
                 //gathering 5-day forecast information
-                const fiveDayForecast = data.daily
-                // const dayOneHumid = data.daily[1].humidity;
-                // console.log(`this is the humidity ${dayOneHumid}`);
-                // const dayOneTemp = data.daily[1].temp.day;
-                // console.log(`this is the temp ${dayOneTemp}`);
-                // const dayOneWind = data.daily[1].wind_speed;
-                // console.log(`this is the wind ${dayOneWind}`);
+                const dayOneData = {
+                    iconOne: data.daily[1].weather[0].icon,
+                    humidityOne: data.daily[1].humidity,
+                    tempOne: data.daily[1].temp.day,
+                    windOne: data.daily[1].wind_speed
+                }
+                console.log(dayOneData)
+                const dayTwoData = {
+                    iconTwo: data.daily[2].weather[0].icon,
+                    humidityTwo: data.daily[2].humidity,
+                    tempTwo: data.daily[2].temp.day,
+                    windTwo: data.daily[2].wind_speed
+                }
+                console.log(dayTwoData)
+                const dayThreeData = {
+                    iconThree: data.daily[3].weather[0].icon,
+                    humidityThree: data.daily[3].humidity,
+                    tempThree: data.daily[3].temp.day,
+                    windThree: data.daily[3].wind_speed
+                }
+                console.log(dayThreeData)
+                const dayFourData = {
+                    iconFour: data.daily[4].weather[0].icon,
+                    humidityFour: data.daily[4].humidity,
+                    tempFour: data.daily[4].temp.day,
+                    windFour: data.daily[4].wind_speed
+                }
+                console.log(dayFourData)
+                const dayFiveData = {
+                    iconFive: data.daily[5].weather[0].icon,
+                    humidityFive: data.daily[5].humidity,
+                    tempFive: data.daily[5].temp.day,
+                    windFive: data.daily[5].wind_speed
+                }
+                console.log(dayFiveData)
             })
         }
     })
@@ -108,14 +137,15 @@ var displayCurrentWeather = function (temp, wind, humidity, uvIndex, icon) {
     currentWeatherContainerEl.appendChild(weatherUviEl)
 }
 
-var displayFiveDay = function () {
-    //clear old content
-    fiveDayContainerEl.textContent = ""
-    //loop over future days array
-    for (var i = 0; i < fiveDayForecast.length; i++) {
-        
-    }
-}
+// var displayFiveDay = function (dayOneData, dayTwoData, dayThreeData, dayFourData, dayFiveData) {
+//     //clear old content
+//     fiveDayContainerEl.textContent = ""
+//     //format five day weather information
+//     var dayOneFore = document.createElement("p")
+//     dayOneFore.innerHTML = dayOneData
+//     dayOneEl.appendChild(dayOneFore)
+//     fiveDayContainerEl.appendChild(dayOneEl)
+// }
 
 //add event listeners to form container
 cityContainerEl.addEventListener("submit", formSubmitHandler);
