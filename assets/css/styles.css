@@ -7,3 +7,15 @@
     width: 10%;
     height: auto;
 }
+.favorable {
+    background-color: greenyellow;
+}
+
+.moderate {
+    background-color: orange;
+}
+
+.severe {
+    background-color: red;
+    color: white;
+}

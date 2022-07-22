@@ -3,7 +3,7 @@ var cityContainerEl = document.querySelector("#user-form")
 // var city = cityInputEl.value.trim()
 var currentWeatherContainerEl = document.querySelector("#city-weather-container")
 var fiveDayContainerEl = document.querySelector("#future-forecast")
-var dayOneEl = document.querySelector("#dayOne")
+var searchHistoryContainerEl = document.querySelector("#past-city-buttons")
 //getting the current day using moment.js
 var todaysDate = moment().format('(M/D/YYYY)').toString();
 
@@ -13,6 +13,8 @@ var formSubmitHandler = function(event) {
     //get value from input element
     var city = cityInputEl.value.trim();
     console.log(cityInputEl.value)
+    //saveCity function call to save to search history
+    saveCity(city)
 
     if (city) {
         getLatLon(city);
@@ -46,6 +48,20 @@ function getLatLon () {
         }
 });
 }
+}
+
+//function to save and display city in search history
+var saveCity = function (city) {
+    //save city to local storage
+    localStorage.setItem(location, city)
+    console.log(localStorage)
+    //get city from local storage
+    var savedCity = localStorage.getItem(location)
+    var savedCityEl = document.createElement("button")
+    savedCityEl.classList.add("btn", "btn-secondary", "btn-large", "btn-block")
+    savedCityEl.setAttribute("data-city", city)
+    savedCityEl.textContent = savedCity
+    searchHistoryContainerEl.appendChild(savedCityEl)
 }
 
 var getWeather = function (lat, lon) {
@@ -150,9 +166,31 @@ var displayCurrentWeather = function (temp, wind, humidity, uvIndex, icon) {
     weatherHumidityEl.textContent = "Humidity: " + humidity + "%"
     currentWeatherContainerEl.appendChild(weatherHumidityEl)
     var weatherUviEl = document.createElement("li")
+    weatherUviEl.classList.add("color-change")
     weatherUviEl.textContent = "UV Index: " + uvIndex
     currentWeatherContainerEl.appendChild(weatherUviEl)
-}    
+
+    //UV Index color change function call
+    colorCode(uvIndex)
+}  
+
+//function to change the color of the UV Index box
+var colorCode = function (uvIndex) {
+    var colorChange = document.getElementsByClassName("color-change")
+    uvIndexNumber = parseInt(uvIndex)
+    console.log(uvIndexNumber)
+    if (uvIndexNumber < 2) {
+        colorChange.classList.addClass("favorable")
+        colorChange.classList.remove("moderate", "severe")
+    } else if (uvIndexNumber > 2 && uvIndex < 8) {
+        colorChange.classList.addClass("moderate")
+        colorChange.classList.remove("favorable", "severe")
+    } else if (uvIndexNumber >= 8) {
+        colorChange.classList.addClass("severe")
+        colorChange.classList.remove("favorable", "moderate")
+    }
+}
+
 
 var displayFiveDay = function (fiveDayFore) {
      //clear old content
@@ -173,5 +211,7 @@ var displayFiveDay = function (fiveDayFore) {
 
 //add event listeners to form container
 cityContainerEl.addEventListener("submit", formSubmitHandler);
+//add event listener to search history buttons
+searchHistoryContainerEl.addEventListener("click", formSubmitHandler);
 
 //API key: 41a56cf98d8a606201c73d9d3aa3cd7f
