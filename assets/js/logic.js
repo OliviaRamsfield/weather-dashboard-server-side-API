@@ -28,7 +28,7 @@ var formSubmitHandler = function(event) {
 
 
 function getLatLon () {
-    // //personal key from OpenWeather api
+    //personal key from OpenWeather api
     var apiKey = "41a56cf98d8a606201c73d9d3aa3cd7f"
     //format OpenWeather api url to change city into lat and long
     var geoApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "+1&limit=5&appid=" + apiKey
@@ -48,7 +48,9 @@ function getLatLon () {
         }
 });
 }
+
 }
+
 
 //function to save and display city in search history
 var saveCity = function (city) {
@@ -87,6 +89,7 @@ var getWeather = function (lat, lon) {
                 
                 //gathering 5-day forecast information
                 const dayOneData = {
+                    date: data.daily[1].dt,
                     icon: data.daily[1].weather[0].icon,
                     humidity: data.daily[1].humidity,
                     temp: data.daily[1].temp.day,
@@ -94,6 +97,7 @@ var getWeather = function (lat, lon) {
                 }
                 console.log(dayOneData)
                 const dayTwoData = {
+                    date: data.daily[2].dt,
                     icon: data.daily[2].weather[0].icon,
                     humidity: data.daily[2].humidity,
                     temp: data.daily[2].temp.day,
@@ -101,6 +105,7 @@ var getWeather = function (lat, lon) {
                 }
                 console.log(dayTwoData)
                 const dayThreeData = {
+                    date: data.daily[3].dt,
                     icon: data.daily[3].weather[0].icon,
                     humidity: data.daily[3].humidity,
                     temp: data.daily[3].temp.day,
@@ -108,6 +113,7 @@ var getWeather = function (lat, lon) {
                 }
                 console.log(dayThreeData)
                 const dayFourData = {
+                    date: data.daily[4].dt,
                     icon: data.daily[4].weather[0].icon,
                     humidity: data.daily[4].humidity,
                     temp: data.daily[4].temp.day,
@@ -115,6 +121,7 @@ var getWeather = function (lat, lon) {
                 }
                 console.log(dayFourData)
                 const dayFiveData = {
+                    date: data.daily[5].dt,
                     icon: data.daily[5].weather[0].icon,
                     humidity: data.daily[5].humidity,
                     temp: data.daily[5].temp.day,
@@ -166,7 +173,7 @@ var displayCurrentWeather = function (temp, wind, humidity, uvIndex, icon) {
     weatherHumidityEl.textContent = "Humidity: " + humidity + "%"
     currentWeatherContainerEl.appendChild(weatherHumidityEl)
     var weatherUviEl = document.createElement("li")
-    weatherUviEl.classList.add("color-change")
+    weatherUviEl.classList.add("colorChange")
     weatherUviEl.textContent = "UV Index: " + uvIndex
     currentWeatherContainerEl.appendChild(weatherUviEl)
 
@@ -176,17 +183,15 @@ var displayCurrentWeather = function (temp, wind, humidity, uvIndex, icon) {
 
 //function to change the color of the UV Index box
 var colorCode = function (uvIndex) {
-    var colorChange = document.getElementsByClassName("color-change")
-    uvIndexNumber = parseInt(uvIndex)
-    console.log(uvIndexNumber)
-    if (uvIndexNumber < 2) {
-        colorChange.classList.addClass("favorable")
+    var colorChange = document.querySelector(".colorChange")
+    if (uvIndex < 2) {
+        colorChange.classList.add("favorable")
         colorChange.classList.remove("moderate", "severe")
-    } else if (uvIndexNumber > 2 && uvIndex < 8) {
-        colorChange.classList.addClass("moderate")
+    } else if (uvIndex > 2 && uvIndex < 8) {
+        colorChange.classList.add("moderate")
         colorChange.classList.remove("favorable", "severe")
-    } else if (uvIndexNumber >= 8) {
-        colorChange.classList.addClass("severe")
+    } else if (uvIndex >= 8) {
+        colorChange.classList.add("severe")
         colorChange.classList.remove("favorable", "moderate")
     }
 }
@@ -199,19 +204,39 @@ var displayFiveDay = function (fiveDayFore) {
     //format five day weather information
     fiveDayFore.forEach(createCard)
 
-    function createCard () {
+    function createCard (day) {
         const fiveDayForeEl = document.createElement("div")
-        console.log("The weather is working")
-        fiveDayForeEl.classList = "card-item"
-        fiveDayForeEl.textContent = JSON.stringify(fiveDayFore)
+        fiveDayForeEl.classList.add("card-item")
+        const dayDate = document.createElement("h3")
+        dayDate.textContent = day.date
+        console.log(dayDate)
+        fiveDayForeEl.append(dayDate)
+        const dayIcon = document.createElement("img")
+        const dayIconUrl = "http://openweathermap.org/img/wn/" + day.icon + "@2x.png"
+        dayIcon.classList.add("icons")
+        dayIcon.alt = "image of current weather condition"
+        dayIcon.src = dayIconUrl
+        fiveDayForeEl.appendChild(dayIcon)
+        const dayTemp = document.createElement("p")
+        dayTemp.textContent = "Temp: " + day.temp + "°F"
+        fiveDayForeEl.append(dayTemp)
+        const dayWind = document.createElement("p")
+        dayWind.textContent = "Wind: " + day.wind + " MPH"
+        fiveDayForeEl.append(dayWind)
+        const dayHumidity = document.createElement("p")
+        dayHumidity.textContent = "Humidity: " + day.humidity + "%"
+        fiveDayForeEl.append(dayHumidity)
         fiveDayContainerEl.appendChild(fiveDayForeEl)
-    }
+        }
 }
 
+//retireve weather data from search history
+// var pastSearch = function (savedCity) {
+//     //just rewrite a function?
+//     getLatLon(savedCity)
+// };
 
 //add event listeners to form container
 cityContainerEl.addEventListener("submit", formSubmitHandler);
 //add event listener to search history buttons
-searchHistoryContainerEl.addEventListener("click", formSubmitHandler);
-
-//API key: 41a56cf98d8a606201c73d9d3aa3cd7f
+// searchHistoryContainerEl.addEventListener("click", pastSearch);
