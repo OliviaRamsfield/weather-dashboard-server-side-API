@@ -3,10 +3,29 @@
     color: white;
 }
 
-.icons {
+.icon {
     width: 10%;
     height: auto;
 }
+
+#future-forecast {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card-item {
+    background-color: navy;
+    color: white;
+    padding: 10px 20px;
+}
+
+.icons {
+    width: 50%;
+    height: auto;
+}
+
 .favorable {
     background-color: greenyellow;
 }

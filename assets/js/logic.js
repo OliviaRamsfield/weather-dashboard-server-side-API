@@ -6,6 +6,13 @@ var fiveDayContainerEl = document.querySelector("#future-forecast")
 var searchHistoryContainerEl = document.querySelector("#past-city-buttons")
 //getting the current day using moment.js
 var todaysDate = moment().format('(M/D/YYYY)').toString();
+// dayOneDate = moment(todaysDate).add(1, "days").format('(M/D/YYYY)').toString();
+// dayTwoDate = moment(dayOneDate).add(1, "days").format('(M/D/YYYY)').toString();
+// dayThreeDate = moment(dayTwoDate).add(1, "days").format('(M/D/YYYY)').toString();
+// dayFourDate = moment(dayThreeDate).add(1, "days").format('(M/D/YYYY)').toString();
+// dayFiveDate = moment(dayeFourDate).add(1, "days").format('(M/D/YYYY)').toString();
+
+// dateArr [dayOneDate, dayTwoDate, dayThreeDate, dayFourDate, dayFiveDate]
 
 var formSubmitHandler = function(event) {
     //prevent page from refreshing
@@ -159,7 +166,7 @@ var displayCurrentWeather = function (temp, wind, humidity, uvIndex, icon) {
     currentWeatherContainerEl.appendChild(currentDay)
     var weatherIconEl = document.createElement("img")
     var iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png"
-    weatherIconEl.classList.add("icons")
+    weatherIconEl.classList.add("icon")
     weatherIconEl.alt = "image of current weather condition"
     weatherIconEl.src = iconUrl
     currentWeatherContainerEl.appendChild(weatherIconEl)
@@ -199,7 +206,7 @@ var colorCode = function (uvIndex) {
 
 var displayFiveDay = function (fiveDayFore) {
      //clear old content
-    //  fiveDayContainerEl.textContent = ""
+     fiveDayContainerEl.textContent = ""
     
     //format five day weather information
     fiveDayFore.forEach(createCard)
@@ -208,7 +215,7 @@ var displayFiveDay = function (fiveDayFore) {
         const fiveDayForeEl = document.createElement("div")
         fiveDayForeEl.classList.add("card-item")
         const dayDate = document.createElement("h3")
-        dayDate.textContent = day.date
+        dayDate.classList.add("date")
         console.log(dayDate)
         fiveDayForeEl.append(dayDate)
         const dayIcon = document.createElement("img")
@@ -228,6 +235,15 @@ var displayFiveDay = function (fiveDayFore) {
         fiveDayForeEl.append(dayHumidity)
         fiveDayContainerEl.appendChild(fiveDayForeEl)
         }
+
+    // function displayDate (dayDate) {
+    //     for (var i = 0; i < dateArr.length; i++) {
+    //         currentFiveDay = document.querySelector(".date")
+    //         currentFiveDay.textContent = dayDate
+    //         fiveDayForeEl.append(currentFiveDay)
+    //     }
+    // }
+    // displayDate(dateArr);
 }
 
 //retireve weather data from search history
